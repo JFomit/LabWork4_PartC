@@ -1,0 +1,17 @@
+{
+    "clangd.arguments": ["--log=verbose", 
+                     "--pretty", 
+                     "--background-index", 
+                     "--clang-tidy",
+                     "--header-insertion=iwyu",
+                     "--compile-commands-dir=${workspaceFolder}/build/",
+                     "--enable-config"
+                ],
+    "editor.tabSize": 2,
+    "clangd.restartAfterCrash": true,
+    "editor.formatOnSave": true,
+    "lldb.displayFormat": "auto",
+    "lldb.showDisassembly": "auto",
+    "lldb.dereferencePointers": true,
+    "lldb.consoleMode": "evaluate"
+}
