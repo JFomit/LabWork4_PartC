@@ -32,9 +32,8 @@ out:
   return;
 }
 
-void OddSquare(Matrix_t *matrix) {
-  long n_2 = matrix->n * matrix->n;
-  long n = matrix->n;
+void OddSquareInSlice(Matrix_t *matrix, long n) {
+  long n_2 = n * n;
 
   long i = 0;
   long j = (n - 1) / 2;
@@ -53,6 +52,11 @@ void OddSquare(Matrix_t *matrix) {
       i += 1;
     }
   }
+}
+
+void OddSquare(Matrix_t *matrix) {
+  long n = matrix->n;
+  OddSquareInSlice(matrix, n);
 }
 
 void EvenEvenSquare(Matrix_t *matrix) {
@@ -102,4 +106,54 @@ void EvenEvenSquare(Matrix_t *matrix) {
     for (long j = n_over_4; j < three_n_over_4; ++j)
       *At(matrix, i, j) = (int)((n_2 + 1) - *At(matrix, i, j));
   }
+}
+
+void Swap(int *a, int *b) {
+  *a = *a ^ *b;
+  *b = *a ^ *b;
+  *a = *a ^ *b;
+}
+
+void EvenOddSquare(Matrix_t *matrix) {
+  long n = matrix->n;
+  long m = n / 2;
+  long m_2 = m * m;
+
+  // Step 1:
+  // Let M1, M2, M3, and M4 represent magic squares of order n (sub matricies)
+  //
+  // M1   M2
+  //
+  // M3   M4
+  //
+  OddSquareInSlice(matrix, m); // M1
+
+  for (long i = 0; i < m; ++i) {
+    for (long j = 0; j < m; ++j) {
+      int item = *At(matrix, i, j);
+
+      *At(matrix, i, j + m) = item + 2 * (int)m_2; // M2
+      *At(matrix, i + m, j) = item + 3 * (int)m_2; // M3
+      *At(matrix, i + m, j + m) = item + (int)m_2; // M4
+    }
+  }
+
+  long q = m - 3;
+  // Swapping right q columns of M3 with q right columns of M1; the same for M4
+  // & M2
+  for (long j = m - q / 2; j < m + q / 2; ++j) {
+    for (long i = 0; i < m; ++i) {
+      Swap(At(matrix, i + m, j), At(matrix, i, j));
+      Swap(At(matrix, i + m, j + m), At(matrix, i, j + m));
+    }
+  }
+
+  // Swapping items in M1 & M3 by jagged line
+  Swap(At(matrix, 0, 0), At(matrix, m, 0)); // first endpoint
+
+  for (long i = 1; i < m - 1; ++i) {
+    Swap(At(matrix, i, 1), At(matrix, i + m, 1));
+  }
+
+  Swap(At(matrix, m - 1, 0), At(matrix, n - 1, 0)); // second endpoint
 }
