@@ -46,3 +46,15 @@ TEST(task_6, odd) {
   // Cleanup
   FreeMatrix(&matrix);
 }
+
+TEST(task_6, even_even) {
+  // Arrange
+  Matrix_t matrix;
+  EXPECT_TRUE(AllocateMatrix(&matrix, 8192));
+  // Act
+  EvenEvenSquare(&matrix);
+  // Assert
+  ASSERT_PRED1(TestMagicSquare, &matrix);
+  // Cleanup
+  FreeMatrix(&matrix);
+}
