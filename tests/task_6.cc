@@ -4,30 +4,32 @@
 bool TestMagicSquare(Matrix_t *matrix) {
   long n = matrix->n;
   bool correct = true;
+  long magic_sum = n * (n * n + 1) / 2;
 
-  long main_diagonal = 0;
-  long secondary_diagonal = 0;
+  long sum = 0;
   for (int i = 0; i < n; ++i) {
-    main_diagonal += *At(matrix, i, i);
+    sum += *At(matrix, i, i);
   }
+  correct = correct && (sum == magic_sum);
+  sum = 0;
   for (int i = 0; i < n; ++i) {
-    secondary_diagonal += *At(matrix, i, n - i);
+    sum += *At(matrix, i, n - 1 - i);
   }
-  correct = correct && (main_diagonal == secondary_diagonal);
+  correct = correct && (magic_sum == sum);
 
   for (int i = 0; i < n; ++i) {
     long row = 0;
     for (int j = 0; j < n; ++j) {
       row += *At(matrix, j, i);
     }
-    correct = correct && row == main_diagonal;
+    correct = correct && row == magic_sum;
   }
   for (int i = 0; i < n; ++i) {
     long col = 0;
     for (int j = 0; j < n; ++j) {
       col += *At(matrix, i, j);
     }
-    correct = correct && col == main_diagonal;
+    correct = correct && col == magic_sum;
   }
 
   return correct;
@@ -36,7 +38,7 @@ bool TestMagicSquare(Matrix_t *matrix) {
 TEST(task_6, odd) {
   // Arrange
   Matrix_t matrix;
-  EXPECT_TRUE(AllocateMatrix(&matrix, 3));
+  EXPECT_TRUE(AllocateMatrix(&matrix, 289));
   // Act
   OddSquare(&matrix);
   // Assert

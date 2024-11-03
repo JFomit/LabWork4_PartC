@@ -41,12 +41,16 @@ void OddSquare(Matrix_t *matrix) {
   for (int d = 1; d <= n_2; ++d) {
     *At(matrix, i, j) = d;
 
+    long old_i = i;
+    long old_j = j;
     i = i == 0 ? n - 1 : i - 1;
     j = (j + 1) % n;
 
-    int *ptr = At(matrix, i, j);
-    while (!ptr && *ptr) {
-      j = (j + 1) % n;
+    if (*At(matrix, i, j) != 0) {
+      i = old_i;
+      j = old_j;
+
+      i += 1;
     }
   }
 }
