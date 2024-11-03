@@ -1,10 +1,11 @@
 cmake_minimum_required(VERSION 3.20)
 
-set(LANGUAGES CXX)
-set(CMAKE_CXX_STANDARD 17)
-set(CXX_STANDARD_REQUIRED ON)
+add_executable(tests task_5.cc task_4.cc)
 
-add_executable(tests task_5.c)
+set_target_properties(tests PROPERTIES
+  LANGUAGES CXX
+  CMAKE_CXX_STANDARD 17
+  CXX_STANDARD_REQUIRED ON)
 
-target_link_libraries(tests gtest_main)
-add_test(NAME tests COMMAND tests_tests)
+target_link_libraries(tests PUBLIC gtest_main task_5_lib task_4_lib)
+add_test(NAME tests COMMAND ctest)

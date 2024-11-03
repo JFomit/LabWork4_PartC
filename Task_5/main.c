@@ -1,8 +1,9 @@
+#include "ctoast/control.h"
 #include "ctoast/io.h"
 #include "lr/task_5.h"
 #include <stdio.h>
 
-void Loop(int *);
+void DoMinesweeper(int *);
 
 int main(void) {
   PrintGreeting(
@@ -12,13 +13,13 @@ int main(void) {
 
   int should_close = 0;
   while (!should_close) {
-    Loop(&should_close);
+    Loop(&should_close, &DoMinesweeper);
   }
 
   return 0;
 }
 
-void DoMinesweeper() {
+void DoMinesweeper(int *_) {
   long m, n = 0;
 
   printf("Введите размеры поля m и n (через <Enter>):\n");
@@ -48,29 +49,4 @@ void DoMinesweeper() {
 
 cleanup:
   FreeField(&field);
-}
-
-void Loop(int *should_close) {
-  char option;
-
-  printf("~> ");
-  if (!ReadCharFromLine(&option)) {
-    printf("Ожидался символ");
-    return;
-  }
-
-  switch (option) {
-  case 'h':
-    printf("r - Запуск\nq - Выход\nh - Эта справка\n");
-    return;
-  case 'q':
-    *should_close = 1;
-    return;
-  case 'r':
-    DoMinesweeper();
-    return;
-  default:
-    printf("Неизвестная опция - %c\n", option);
-    return;
-  }
 }

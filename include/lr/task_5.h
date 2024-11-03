@@ -1,6 +1,10 @@
 #ifndef LR4_TASK_5_H_
 #define LR4_TASK_5_H_
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include "ctoast/result.h"
 #include <stddef.h>
 typedef struct Field {
@@ -16,5 +20,9 @@ char *CellAt(Field_t *field, const long i, const long j);
 void FreeField(Field_t *field);
 
 Result_t ReadProcessReportErr(Field_t *field);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // LR4_TASK_5_APP_H_

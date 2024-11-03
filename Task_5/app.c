@@ -8,8 +8,9 @@
 #include <string.h>
 
 Result_t AllocateField(const size_t m, const size_t n, Field_t *field) {
-  char **matrix = (char **)malloc(m * n * sizeof(char));
+  char **matrix = (char **)malloc(m * n * sizeof(char) + sizeof(char));
   memset(matrix, (int)'0', n * m * sizeof(char));
+  ((char *)matrix)[n * m + 1] = '\0'; // now it is a string
 
   if (!matrix) {
     field->matrix = NULL;

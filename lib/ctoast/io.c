@@ -67,3 +67,13 @@ void PrintGreeting(const int task_number, const char *description) {
   printf("%s\n", description);
   printf("---------------------------\n");
 }
+
+Result_t ReadArray(long *array, size_t length) {
+  for (size_t i = 0; i < length; ++i) {
+    if (!ReadLong(&array[i])) {
+      return kErr;
+    }
+  }
+
+  return kOk;
+}
