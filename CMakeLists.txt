@@ -6,6 +6,7 @@ enable_testing()
 include_directories(include)
 
 add_subdirectory(lib/ctoast)
+add_subdirectory(Task_6)
 add_subdirectory(Task_5)
 add_subdirectory(Task_4)
 add_subdirectory(tests)

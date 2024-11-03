@@ -1,0 +1,1 @@
+#include "lr/task_6.h"
