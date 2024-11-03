@@ -38,20 +38,30 @@ void OddSquare(Matrix_t *matrix) {
 
   long i = 0;
   long j = (n - 1) / 2;
-  for (int d = 1; d <= n_2; ++d) {
-    *At(matrix, i, j) = d;
+  *At(matrix, i, j) = 1;
 
-    long old_i = i;
-    long old_j = j;
-    i = i == 0 ? n - 1 : i - 1;
-    j = (j + 1) % n;
-
-    if (*At(matrix, i, j) != 0) {
-      i = old_i;
-      j = old_j;
-
-      i += 1;
+  for (int d = 2; d <= n_2; ++d) {
+    long k, l;
+    if (i >= 1) {
+      k = i - 1;
+    } else {
+      k = n - 1;
     }
+
+    if (j >= 1) {
+      l = j - 1;
+    } else {
+      l = n - 1;
+    }
+
+    if (*At(matrix, k, l) >= 1) {
+      i = (i + 1) % n;
+    } else {
+      i = k;
+      j = l;
+    }
+
+    *At(matrix, i, j) = d;
   }
 }
 
