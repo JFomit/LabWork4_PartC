@@ -11,7 +11,7 @@ void MakeMagicSquare(int *_) {
   }
   // trivial cases
   if (n == 1) {
-    printf("1");
+    printf("1\n");
     goto out;
   }
   if (n == 2) {
