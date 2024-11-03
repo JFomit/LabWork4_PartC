@@ -32,36 +32,25 @@ out:
   return;
 }
 
-void OddSquareInSlice(Matrix_t *matrix, long sub_size) {
-  long n = sub_size;
-  long n_2 = sub_size * sub_size;
+void OddSquareInSlice(Matrix_t *matrix, long n) {
+  long n_2 = n * n;
 
   long i = 0;
   long j = (n - 1) / 2;
-  *At(matrix, i, j) = 1;
-
-  for (int d = 2; d <= n_2; ++d) {
-    long k, l;
-    if (i >= 1) {
-      k = i - 1;
-    } else {
-      k = n - 1;
-    }
-
-    if (j >= 1) {
-      l = j - 1;
-    } else {
-      l = n - 1;
-    }
-
-    if (*At(matrix, k, l) >= 1) {
-      i = (i + 1) % n;
-    } else {
-      i = k;
-      j = l;
-    }
-
+  for (int d = 1; d <= n_2; ++d) {
     *At(matrix, i, j) = d;
+
+    long old_i = i;
+    long old_j = j;
+    i = i == 0 ? n - 1 : i - 1;
+    j = (j + 1) % n;
+
+    if (*At(matrix, i, j) != 0) {
+      i = old_i;
+      j = old_j;
+
+      i += 1;
+    }
   }
 }
 
@@ -143,8 +132,8 @@ void EvenOddSquare(Matrix_t *matrix) {
     for (long j = 0; j < m; ++j) {
       int item = *At(matrix, i, j);
 
-      *At(matrix, i + m, j) = item + 2 * (int)m_2; // M2
-      *At(matrix, i, j + m) = item + 3 * (int)m_2; // M3
+      *At(matrix, i, j + m) = item + 2 * (int)m_2; // M2
+      *At(matrix, i + m, j) = item + 3 * (int)m_2; // M3
       *At(matrix, i + m, j + m) = item + (int)m_2; // M4
     }
   }
@@ -154,8 +143,8 @@ void EvenOddSquare(Matrix_t *matrix) {
   // & M2
   for (long j = m - q / 2; j < m + q / 2; ++j) {
     for (long i = 0; i < m; ++i) {
-      Swap(At(matrix, i, j + m), At(matrix, i, j));
-      Swap(At(matrix, i + m, j + m), At(matrix, i + m, j));
+      Swap(At(matrix, i + m, j), At(matrix, i, j));
+      Swap(At(matrix, i + m, j + m), At(matrix, i, j + m));
     }
   }
 
