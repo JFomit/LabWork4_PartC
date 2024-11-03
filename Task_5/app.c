@@ -9,8 +9,6 @@
 
 Result_t AllocateField(const size_t m, const size_t n, Field_t *field) {
   char *matrix = (char *)malloc(m * n * sizeof(char) + 1);
-  memset(matrix, (int)'0', n * m * sizeof(char));
-  matrix[n * m] = '\0'; // now it is a string
 
   if (!matrix) {
     field->matrix = NULL;
@@ -18,6 +16,8 @@ Result_t AllocateField(const size_t m, const size_t n, Field_t *field) {
     field->n = 0;
     return kErr;
   }
+  memset(matrix, (int)'0', n * m * sizeof(char));
+  matrix[n * m] = '\0'; // now it is a string
 
   *field = (Field_t){.matrix = matrix, .m = (long)m, .n = (long)n};
   return kOk;

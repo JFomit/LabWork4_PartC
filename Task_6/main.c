@@ -7,7 +7,7 @@ int main(void) {
 
   int should_close = 0;
   while (!should_close) {
-    Loop(&should_close, &Run);
+    Loop(&should_close, &MakeMagicSquare);
   }
 
   return 0;
