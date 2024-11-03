@@ -48,7 +48,7 @@ void Run(int *_) {
   printf("Введите n:");
   long input = 0;
   if (!ReadLong(&input) || input <= 0) {
-    printf("Ожидалось целое положительное число.");
+    printf("Ожидалось целое положительное число.\n");
     goto out;
   }
 
@@ -57,9 +57,12 @@ void Run(int *_) {
   size_t n_3 = n_2 * n;
   long *array = (long *)malloc(n_3 * sizeof(long));
   if (!array) {
+    printf("Не удалось выделить достаточно памяти. Запрошено %li байт.\n",
+           n_3 * sizeof(long));
     goto cleanup;
   }
   if (!ReadArray(array, n_3)) {
+    printf("Ожидалось число.\n");
     goto cleanup;
   }
 

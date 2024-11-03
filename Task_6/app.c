@@ -4,6 +4,7 @@
 
 void MakeMagicSquare(int *_) {
   long n = 0;
+  printf("Введите порядок квадрата:\n");
   if (!ReadLong(&n) || n <= 0) {
     printf("Размер квадрата должен быть неотрицательным.\n");
     goto out;
@@ -24,6 +25,23 @@ void MakeMagicSquare(int *_) {
     printf("Не удалось выделить достаточно памяти. Запрошено %li байт.\n",
            n * n * (long)sizeof(int));
     goto cleanup;
+  }
+
+  if (n > 46340) {
+    printf("ВНИМАНИЕ: запрошенный размер квадрата вызовет переполениение его "
+           "элементов!\n");
+  }
+
+  void (*constructors[4])(Matrix_t *) = {&EvenEvenSquare, &OddSquare,
+                                         &EvenOddSquare, &OddSquare};
+
+  constructors[n % 4](&matrix);
+
+  for (long i = 0; i < n; ++i) {
+    for (long j = 0; j < n; ++j) {
+      printf("%i ", *At(&matrix, i, j));
+    }
+    printf("\n");
   }
 
 cleanup:
