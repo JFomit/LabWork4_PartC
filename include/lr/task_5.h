@@ -8,7 +8,7 @@ extern "C" {
 #include "ctoast/result.h"
 #include <stddef.h>
 typedef struct Field {
-  char **matrix;
+  char *matrix;
   long m;
   long n;
 } Field_t;
@@ -19,6 +19,7 @@ char *CellAt(Field_t *field, const long i, const long j);
 
 void FreeField(Field_t *field);
 
+void ProcessChar(Field_t *field, char c, long i, long j);
 Result_t ReadProcessReportErr(Field_t *field);
 
 #ifdef __cplusplus

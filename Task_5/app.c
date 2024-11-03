@@ -8,9 +8,9 @@
 #include <string.h>
 
 Result_t AllocateField(const size_t m, const size_t n, Field_t *field) {
-  char **matrix = (char **)malloc(m * n * sizeof(char) + sizeof(char));
+  char *matrix = (char *)malloc(m * n * sizeof(char) + 1);
   memset(matrix, (int)'0', n * m * sizeof(char));
-  ((char *)matrix)[n * m + 1] = '\0'; // now it is a string
+  matrix[n * m] = '\0'; // now it is a string
 
   if (!matrix) {
     field->matrix = NULL;
@@ -28,7 +28,7 @@ char *CellAt(Field_t *field, const long i, const long j) {
     return NULL;
   }
 
-  return (char *)field->matrix + field->m * i + j;
+  return field->matrix + field->n * i + j;
 }
 
 void FreeField(Field_t *field) {
@@ -61,30 +61,31 @@ void ProcessStar(Field_t *field, const long i, const long j) {
   }
 }
 
+void ProcessChar(Field_t *field, char c, long i, long j) {
+  switch (c) {
+  case '.':
+    ProcessDot(field, i, j);
+    break;
+  case '*':
+    ProcessStar(field, i, j);
+    break;
+  }
+}
+
 Result_t ReadProcessReportErr(Field_t *field) {
   for (long i = 0; i < field->m; ++i) {
     for (long j = 0; j < field->n; ++j) {
       char c;
-      if (!ReadChar(&c)) {
+      if (!ReadChar(&c) || (c != '.' && c != '*')) {
         printf("Ожидался символ `.' или `*'.\n");
         return kErr;
       }
 
-      switch (c) {
-      case '.':
-        ProcessDot(field, i, j);
-        break;
-      case '*':
-        ProcessStar(field, i, j);
-        break;
-      default:
-        printf("Ожидался символ `.' или `*'.\n");
-        return kErr;
-      }
+      ProcessChar(field, c, i, j);
     }
     char c;
     if (!ReadChar(&c) || c != '\n') {
-      (void)fprintf(stderr, "Ожидался символ `\\n'.\n");
+      printf("Ожидался символ `\\n'.\n");
       return kErr;
     }
   }
