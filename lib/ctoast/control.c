@@ -7,7 +7,7 @@ void Loop(int *should_close, RunnerFunction runner) {
 
   printf("~> ");
   if (!ReadCharFromLine(&option)) {
-    printf("Ожидался символ");
+    printf("Ожидался символ; введите `h' для справки.");
     return;
   }
 
@@ -22,7 +22,7 @@ void Loop(int *should_close, RunnerFunction runner) {
     runner(should_close);
     return;
   default:
-    printf("Неизвестная опция - %c\n", option);
+    printf("Неизвестная опция - %c; введите `h' для справки.\n", option);
     return;
   }
 }

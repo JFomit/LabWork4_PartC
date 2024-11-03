@@ -62,7 +62,7 @@ TEST(task_6, even_even) {
 TEST(task_6, even_odd) {
   // Arrange
   Matrix_t matrix;
-  EXPECT_TRUE(AllocateMatrix(&matrix, 6));
+  EXPECT_TRUE(AllocateMatrix(&matrix, 34));
   // Act
   EvenOddSquare(&matrix);
   // Assert

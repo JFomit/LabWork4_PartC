@@ -161,8 +161,9 @@ void EvenOddSquare(Matrix_t *matrix) {
   // & M2
   for (long j = m - q / 2; j < m + q / 2; ++j) {
     for (long i = 0; i < m; ++i) {
-      Swap(At(matrix, i + m, j), At(matrix, i, j));
-      Swap(At(matrix, i + m, j + m), At(matrix, i, j + m));
+      int *a = At(matrix, i + m, j);
+      int *b = At(matrix, i, j);
+      Swap(a, b);
     }
   }
 
