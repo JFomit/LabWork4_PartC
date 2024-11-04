@@ -40,9 +40,9 @@ void FreeField(Field_t *field) {
 }
 
 void ProcessDot(Field_t *field, const long i, const long j) {
-  char c = *CellAt(field, i, j);
-  if (c == 0) {
-    c = '0';
+  char *c = CellAt(field, i, j);
+  if (*c == 0) {
+    *c = '0';
   }
 }
 

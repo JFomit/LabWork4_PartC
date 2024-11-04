@@ -77,6 +77,15 @@ void OddSquare(Matrix_t *matrix) {
   OddSquareInSlice(matrix, n);
 }
 
+void ChangeSubSection(Matrix_t *matrix, long i_from, long i_to, long j_from,
+                      long j_to) {
+  for (long i = i_from; i < i_to; ++i) {
+    for (long j = j_from; j < j_to; ++j)
+      *At(matrix, i, j) =
+          (int)((matrix->n * matrix->n + 1) - *At(matrix, i, j));
+  }
+}
+
 void EvenEvenSquare(Matrix_t *matrix) {
   long n = matrix->n;
   long n_2 = n * n;
@@ -93,37 +102,21 @@ void EvenEvenSquare(Matrix_t *matrix) {
   // (n*n+1)-arr[i][j]
   // Top Left corner of Matrix
   // (order (n/4)*(n/4))
-  for (long i = 0; i < n_over_4; ++i) {
-    for (long j = 0; j < n_over_4; ++j)
-      *At(matrix, i, j) = (int)((n_2 + 1) - *At(matrix, i, j));
-  }
+  ChangeSubSection(matrix, 0, n_over_4, 0, n_over_4);
 
   // Top Right corner of Matrix
   // (order (n/4)*(n/4))
-  for (long i = 0; i < n_over_4; ++i) {
-    for (long j = three_n_over_4; j < n; ++j)
-      *At(matrix, i, j) = (int)((n_2 + 1) - *At(matrix, i, j));
-  }
-
+  ChangeSubSection(matrix, 0, n_over_4, three_n_over_4, n);
   // Bottom Left corner of Matrix
   // (order (n/4)*(n/4))
-  for (long i = three_n_over_4; i < n; ++i) {
-    for (long j = 0; j < n_over_4; ++j)
-      *At(matrix, i, j) = (int)((n_2 + 1) - *At(matrix, i, j));
-  }
+  ChangeSubSection(matrix, three_n_over_4, n, 0, n_over_4);
 
   // Bottom Right corner of Matrix
   // (order (n/4)*(n/4))
-  for (long i = three_n_over_4; i < n; ++i) {
-    for (long j = three_n_over_4; j < n; ++j)
-      *At(matrix, i, j) = (int)((n_2 + 1) - *At(matrix, i, j));
-  }
+  ChangeSubSection(matrix, three_n_over_4, n, three_n_over_4, n);
 
   // Centre of Matrix (order (n/2)*(n/2))
-  for (long i = n_over_4; i < three_n_over_4; ++i) {
-    for (long j = n_over_4; j < three_n_over_4; ++j)
-      *At(matrix, i, j) = (int)((n_2 + 1) - *At(matrix, i, j));
-  }
+  ChangeSubSection(matrix, n_over_4, three_n_over_4, n_over_4, three_n_over_4);
 }
 
 void Swap(int *a, int *b) {

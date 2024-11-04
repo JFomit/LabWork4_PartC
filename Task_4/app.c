@@ -14,22 +14,22 @@ size_t GetMaxSumDiagonalNo(long *cube, size_t n) {
     i = d;
     j = d;
     k = d;
-    diagonalic_sums[0] += ((long *)cube)[i * n_2 + j * n + k];
+    diagonalic_sums[0] += cube[i * n_2 + j * n + k];
 
     i = up_n - d;
     j = d;
     k = d;
-    diagonalic_sums[1] += ((long *)cube)[i * n_2 + j * n + k];
+    diagonalic_sums[1] += cube[i * n_2 + j * n + k];
 
     i = d;
     j = up_n - d;
     k = d;
-    diagonalic_sums[2] += ((long *)cube)[i * n_2 + j * n + k];
+    diagonalic_sums[2] += cube[i * n_2 + j * n + k];
 
     i = up_n - d;
     j = up_n - d;
     k = d;
-    diagonalic_sums[3] += ((long *)cube)[i * n_2 + j * n + k];
+    diagonalic_sums[3] += cube[i * n_2 + j * n + k];
   }
 
   long max = diagonalic_sums[0];
